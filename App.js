@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
+import { useState,react } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { NavigationContainer } from '@react-navigation/native';
+
+import foodContext from './Context/foodContext';
+import MainScreen from './Screen/MainScreen';
+import ScreenNavigation from './navigation/ScreeNavigator';
+
 export default function App() {
+
+  const [food,setFood]=useState([])
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <foodContext.Provider value={{food,setFood}}>
+    <NavigationContainer>
+    <ScreenNavigation/>
+    </NavigationContainer>
+    </foodContext.Provider>
+    
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  
 });
