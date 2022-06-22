@@ -12,12 +12,15 @@ import foodContext from '../Context/foodContext'
 export default function MainScreen({navigation}) {
     const foodcontext=useContext(foodContext);
     const [Visible,setVisible]=useState(false);
-    const [food,setFood]=useState([
-        
-    ])
+    const [name,setName]=useState();
+    const [price,setPrice]=useState();
 
-    const handleSubmit=({name,price})=>{
-        // console.log(txt)
+
+    const foods=foodcontext.food || [];
+   
+
+    const handleSubmit=()=>{
+        console.log(name,price)
         const newFood={
             id:Math.random(), 
             title:name,
@@ -34,12 +37,17 @@ export default function MainScreen({navigation}) {
                 </View>
 
                  <View style={{backgroundColor:"#fbfbfb",marginBottom:50}}>
-                        <FlatList 
-                        data={foodcontext.food}
-                        keyExtractor={food=>food.id.toString()}
-                        renderItem={({item})=><Card name={item.title} price={item.price} info={item.id} />}
-                        >
-                        </FlatList>
+                        
+                    {foods.map((infor,index)=>{
+               
+               return( 
+                     
+                      <Card info={infor} index={index} />
+               ) 
+              
+             })
+             
+            }
                 </View>
                 
                 <View style={{marginBottom:20}}>
@@ -67,19 +75,14 @@ export default function MainScreen({navigation}) {
                                         <Entypo name="cross" size={24} color="black" onPress={()=>setVisible(false)} style={{padding:20}}/>
                                     </View>
 
-                                    <Formik
-                                    initialValues={{name:'',price:''}}
-                                    onSubmit={handleSubmit}
-                                    >
-                                    {({handleChange,errors,handleSubmit})=>(
-                                        <>
+                                  
                                                  <View style={styles.back}> 
                                         
                                                     <Text style={styles.text}>Food Name</Text>
 
                                                     <TextInput 
                                                     style={styles.name}
-                                                    onChangeText={handleChange('name')}
+                                                    onChangeText={(val)=>setName(val)}
                                                     selectionColor={'black'}
                                                     placeholder={"Name"}
                                                     />
@@ -88,15 +91,14 @@ export default function MainScreen({navigation}) {
 
                                                     <TextInput
                                                     style={styles.price}
-                                                    onChangeText={handleChange('price')}
+                                                    onChangeText={(val)=>setPrice(val)}
                                                     selectionColor={'black'}
                                                     placeholder={"price"}
                                                     />
                                                     <FinalButton title={"Add Food Item"} onPress={handleSubmit}/>
 
                                                 </View>        
-                                         </>)}
-                                    </Formik>
+                                         
                           </View>                                     
                      </View>                                     
               </Modal>

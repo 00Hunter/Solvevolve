@@ -8,21 +8,20 @@ import foodContext from '../Context/foodContext';
 
 
 
-export default function Card({name,info,price}) {
-    // console.log(info)
+export default function Card({info,index}) {
+
+    // console.log(index)
     const foodcontext=useContext(foodContext);
 
     const handleDelete=()=>{
-
+        // console.log(index)
         const temp=foodcontext.food
-        const newList=temp.filter(function (currentValue) {
-            console.log(currentValue[])
-            return currentValue!== info;
-          });
-        //   console.log(currentValue.id)
+        // console.log(temp)
+        // const newList=temp.splice(index,1)
+        const filteredItems = temp.slice(0, index).concat(temp.slice(index + 1, temp.length))
 
-        //  l console.log(foodcontext.food);
-        foodcontext.setFood(newList)
+          console.log(filteredItems);
+        foodcontext.setFood(filteredItems)
 
     }
 
@@ -30,12 +29,12 @@ export default function Card({name,info,price}) {
     <View style={styles.container}>
         <View style={styles.textContainer}>
             <Image source={require("../assets/dots.png")} style={{marginVertical:3}}/>
-            <Text style={styles.text}>{name}</Text>
+            <Text style={styles.text}>{info.title}</Text>
         </View>
         <View style={styles.priceContainer}>
             <Text style={styles.price}>Price : </Text>
             <FontAwesome name="rupee" size={18} color="black" style={{padding:4}} />
-            <Text style={{fontSize:17,fontWeight:"700"}}>{price}</Text>     
+            <Text style={{fontSize:17,fontWeight:"700"}}>{info.price}</Text>     
         </View>
 
         <View style={styles.iconContainer}>
